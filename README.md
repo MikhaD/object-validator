@@ -1,4 +1,6 @@
 # Validate JSON
+![min version](https://img.shields.io/static/v1?label=python&message=v9.0%2B&color=3776ab&logo=python)
+
 A simple tool to validate python dictionaries and/or lists against a schema. I was working on a different project that couldn't use 3rd party libraries and needed to work with JSON files provided by the user, so I wrote this tool to check that a given object matches a given schema.
 
 This project is comprised of two functions, `is_type` and `validate`.
@@ -10,7 +12,7 @@ However, for these types you might as well use the `type` function. The real pow
 
 Types can be as deeply nested as you like. For example, the type list[tuple[int, str], dict[bool, str], int] matches a list that can contain tuples of integers and strings, dictionaries with values that are booleans or strings, or integers.
 ### `validate`
-`validate` uses `is_type` and takes two arguments, an object and a schema. It returns `True` if the object matches the schema, and `False` otherwise.
+`validate` uses `is_type` and takes two arguments, an object and a schema. It returns `True` if the object matches the schema, and `False` otherwise. An object in this context is a python dictionary or list. The result produced by `json.parse` is the perfect candidate for this function.
 Because of the way `validate` uses `is_type`, it can be used in place of `is_type` without any change in functionality.
 ## Schema Syntax
 - TODO

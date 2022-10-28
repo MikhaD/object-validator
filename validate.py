@@ -6,7 +6,11 @@ class InvalidSchema(Exception):
 	pass
 
 def is_type(value: Any, test_type: Union[type, GenericAlias]):
-	"""Check if a value is of a certain type or complex type."""
+	"""
+	Check if a value is of a certain type or parameterized generic type. Returns `True` if the value is of the given type, and `False` otherwise. Type can be any primitive python type, `int`, `float`, `bool`, or `str`, or any of the raw basic data structures, `list`, `tuple`, `dict`, or `set`.
+
+	The main use for this function comes from its support for parameterized generic types. For example, `is_type([1, 2, 3], list[int])` returns `True`, and `is_type([1, 2, 3], list[str])` returns `False`. This is useful for validating lists of objects, for example.
+	"""
 	if type(value) == test_type: return True
 	if type(value) not in (tuple, set, list, dict): return False
 	base_type = getattr(test_type, "__origin__", False)
@@ -33,7 +37,6 @@ def is_type(value: Any, test_type: Union[type, GenericAlias]):
 def validate(obj: Any, schema: Any):
 	"""
 	Check if a dict or list matches a schema.
-	If strict is True objects must have the same keys as the schema. If it is False objects can have more keys.
 	"""
 	if isinstance(schema, (int, float, str, bool)) or schema is None:
 		return obj == schema
