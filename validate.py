@@ -30,7 +30,7 @@ def is_type(value: Any, test_type: Union[type, GenericAlias]):
 		else: return False
 	return True
 
-def validate_schema(obj: Any, schema: Any):
+def validate(obj: Any, schema: Any):
 	"""
 	Check if a dict or list matches a schema.
 	If strict is True objects must have the same keys as the schema. If it is False objects can have more keys.
@@ -47,13 +47,13 @@ def validate_schema(obj: Any, schema: Any):
 		for key in schema:
 			if isinstance(key, str):
 				if key not in obj: return False
-				if not validate_schema(obj[key], schema[key]): return False
+				if not validate(obj[key], schema[key]): return False
 			elif key == str:
 				if general_key: raise InvalidSchema("Multiple general keys in schema")
 				general_key = True
 				for k in obj:
 					if k not in schema:
-						if not validate_schema(obj[k], schema[key]): return False
+						if not validate(obj[k], schema[key]): return False
 						non_literals += 1
 		# True is the same as 1, False is the same as 0
 		if len(obj) - non_literals != len(schema) - general_key: return False
@@ -61,7 +61,7 @@ def validate_schema(obj: Any, schema: Any):
 	elif type(schema) == list:
 		for i in obj:
 			for sub_schema in schema:
-				if validate_schema(i, sub_schema):
+				if validate(i, sub_schema):
 					break
 			# for else triggers the else if the for loop ends without breaking
 			else: return False

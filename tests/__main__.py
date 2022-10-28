@@ -1,5 +1,5 @@
 import tests.test_is_type
-import tests.test_validate_schema
+import tests.test_validate
 import doctest
 
 total = 0
@@ -9,7 +9,7 @@ results = doctest.testmod(tests.test_is_type)
 total += results.attempted
 failed += results.failed
 
-results = doctest.testmod(tests.test_validate_schema)
+results = doctest.testmod(tests.test_validate)
 total += results.attempted
 failed += results.failed
 

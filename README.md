@@ -13,3 +13,4 @@ Types can be as deeply nested as you like. For example, the type list[tuple[int,
 `validate` uses `is_type` and takes two arguments, an object and a schema. It returns `True` if the object matches the schema, and `False` otherwise.
 Because of the way `validate` uses `is_type`, it can be used in place of `is_type` without any change in functionality.
 ## Schema Syntax
+- TODO
