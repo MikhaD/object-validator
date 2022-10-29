@@ -14,12 +14,6 @@ True
 True
 >>> validate.is_type(4.0, Union[int, str])
 False
->>> validate.is_type("4", int | str)
-True
->>> validate.is_type(4, int | str)
-True
->>> validate.is_type(4.0, int | str)
-False
 
 >>> validate.is_type(validate.is_type, tuple)
 False
@@ -91,14 +85,14 @@ False
 >>> validate.is_type(("hello", 3, [False, True, True]), tuple[str, int, list[bool]])
 True
 
->>> validate.is_type(["hello", 3, [False, True, True]], list[str | int, list])
+>>> validate.is_type(["hello", 3, [False, True, True]], list[Union[str, int], list])
 True
->>> validate.is_type(["hello", 3, [False, True, True]], list[str | int | list])
+>>> validate.is_type(["hello", 3, [False, True, True]], list[Union[str, int, list]])
 True
->>> validate.is_type([1, True, 4, ["hi", 5]], list[int | bool | list[str]])
+>>> validate.is_type([1, True, 4, ["hi", 5]], list[Union[int, bool, list[str]]])
 False
->>> validate.is_type([1, True, 4, ["hi", 5]], list[int | bool | list[str | int]])
+>>> validate.is_type([1, True, 4, ["hi", 5]], list[Union[int, bool, list[Union[str, int]]]])
 True
->>> validate.is_type([1, 4, ["hi", 5]], list[int | bool | list])
+>>> validate.is_type([1, 4, ["hi", 5]], list[Union[int, bool, list]])
 True
 """

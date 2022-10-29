@@ -46,7 +46,7 @@ def validate(obj: Any, schema: Any):
 	"""
 	if isinstance(schema, (int, float, str, bool)) or schema is None:
 		return obj == schema
-	if isinstance(schema, (type, GenericAlias)):
+	if isinstance(schema, (type, GenericAlias, UnionType, _UnionGenericAlias)):
 		return is_type(obj, schema)
 	if type(obj) != type(schema):
 		return False

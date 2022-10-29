@@ -1,5 +1,6 @@
 """
 >>> import validate
+>>> from typing import Union
 >>> validate.validate({"a": 1}, {"a": int})
 True
 >>> validate.validate({"a": True}, {"a": int})
@@ -42,4 +43,8 @@ True
 False
 >>> validate.validate({"c": 3, "d": 3}, {"b": int, str: 3})
 False
+>>> validate.validate({"b": 3, "c": 3, "d": "3"}, {"b": int, str: Union[int, str]})
+True
+>>> validate.validate({"b": "3"}, {"b": Union[int, str]})
+True
 """
