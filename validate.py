@@ -5,7 +5,7 @@ class InvalidSchema(Exception):
 	"""Raised when a schema is invalid."""
 	pass
 
-def is_type(value: Any, test_type: Union[type, GenericAlias, UnionType]):
+def is_type(value: Any, test_type: type | GenericAlias | UnionType) -> bool:
 	"""
 	Check if a value is of a certain type or parameterized generic type. Returns `True` if the value is of the given type, and `False` otherwise. Type can be any primitive python type, `int`, `float`, `bool`, or `str`, or any of the raw basic data structures, `list`, `tuple`, `dict`, or `set`.
 
@@ -40,7 +40,7 @@ def is_type(value: Any, test_type: Union[type, GenericAlias, UnionType]):
 		else: return False
 	return True
 
-def validate(obj: Any, schema: Any):
+def validate(obj: Any, schema: Any) -> bool:
 	"""
 	Check if a dict or list matches a schema.
 	"""
