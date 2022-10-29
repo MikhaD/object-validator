@@ -15,4 +15,6 @@ Types can be as deeply nested as you like. For example, the type list[tuple[int,
 `validate` uses `is_type` and takes two arguments, an object and a schema. It returns `True` if the object matches the schema, and `False` otherwise. An object in this context is a python dictionary or list. The result produced by `json.parse` is the perfect candidate for this function.
 Because of the way `validate` uses `is_type`, it can be used in place of `is_type` without any change in functionality.
 ## Schema Syntax
-- TODO
+- The schema is a python dictionary or list.
+- In a dictionary keys in the schema must be in the object.
+INCOMPLETE

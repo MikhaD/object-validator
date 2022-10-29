@@ -1,4 +1,5 @@
 """
+>>> from typing import Union
 >>> import validate
 >>> validate.is_type(1, int)
 True
@@ -6,6 +7,19 @@ True
 True
 >>> validate.is_type({1, 2}, set)
 True
+
+>>> validate.is_type(4, Union[int, str])
+True
+>>> validate.is_type("4", Union[int, str])
+True
+>>> validate.is_type(4.0, Union[int, str])
+False
+>>> validate.is_type("4", int | str)
+True
+>>> validate.is_type(4, int | str)
+True
+>>> validate.is_type(4.0, int | str)
+False
 
 >>> validate.is_type(validate.is_type, tuple)
 False
@@ -75,5 +89,16 @@ True
 >>> validate.is_type(("hello", 3, [False, 1, True]), tuple[str, int, list[bool]])
 False
 >>> validate.is_type(("hello", 3, [False, True, True]), tuple[str, int, list[bool]])
+True
+
+>>> validate.is_type(["hello", 3, [False, True, True]], list[str | int, list])
+True
+>>> validate.is_type(["hello", 3, [False, True, True]], list[str | int | list])
+True
+>>> validate.is_type([1, True, 4, ["hi", 5]], list[int | bool | list[str]])
+False
+>>> validate.is_type([1, True, 4, ["hi", 5]], list[int | bool | list[str | int]])
+True
+>>> validate.is_type([1, 4, ["hi", 5]], list[int | bool | list])
 True
 """

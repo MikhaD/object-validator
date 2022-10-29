@@ -1,17 +1,22 @@
-from types import GenericAlias
-from typing import Any, Union
+from types import GenericAlias, UnionType
+from typing import Any, Union, _UnionGenericAlias  # type: ignore
 
 class InvalidSchema(Exception):
 	"""Raised when a schema is invalid."""
 	pass
 
-def is_type(value: Any, test_type: Union[type, GenericAlias]):
+def is_type(value: Any, test_type: Union[type, GenericAlias, UnionType]):
 	"""
 	Check if a value is of a certain type or parameterized generic type. Returns `True` if the value is of the given type, and `False` otherwise. Type can be any primitive python type, `int`, `float`, `bool`, or `str`, or any of the raw basic data structures, `list`, `tuple`, `dict`, or `set`.
 
 	The main use for this function comes from its support for parameterized generic types. For example, `is_type([1, 2, 3], list[int])` returns `True`, and `is_type([1, 2, 3], list[str])` returns `False`. This is useful for validating lists of objects, for example.
 	"""
 	if type(value) == test_type: return True
+	if type(test_type) in (_UnionGenericAlias, UnionType):
+		types = getattr(test_type, "__args__", None)
+		for t in types:
+			if is_type(value, t): return True
+		return False
 	if type(value) not in (tuple, set, list, dict): return False
 	base_type = getattr(test_type, "__origin__", False)
 	type_args = getattr(test_type, "__args__", [])
@@ -27,6 +32,7 @@ def is_type(value: Any, test_type: Union[type, GenericAlias]):
 				if is_type(v, t): break
 			else: return False
 		return True
+	# if base_type == list or base_type == set:
 	for v in value:
 		for t in type_args:
 			if is_type(v, t): break
