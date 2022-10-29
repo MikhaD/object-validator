@@ -15,6 +15,12 @@ Types can be as deeply nested as you like. For example, the type list[tuple[int,
 `validate` uses `is_type` and takes two arguments, an object and a schema. It returns `True` if the object matches the schema, and `False` otherwise. An object in this context is a python dictionary or list. The result produced by `json.parse` is the perfect candidate for this function.
 Because of the way `validate` uses `is_type`, it can be used in place of `is_type` without any change in functionality.
 ## Schema Syntax
-- The schema is a python dictionary or list.
-- In a dictionary keys in the schema must be in the object.
-INCOMPLETE
+The schema is a python dictionary or list. Types are specified using the same syntax as `is_type`. For example, the schema `{"a": int, "b": str}` matches a dictionary with keys "a" and "b" that are integers and strings respectively. The schema `{"a": list[int]}` matches a dictionary with a key "a" that is a list of integers.
+
+Types can be unions using Union or the new python 1.10 pipe syntax. For example, the schema `{str: int | str}` matches a dictionary with 0 or more string keys that have values that are either an integer or a string. The schema `{str: Union[int, str]}` is equivalent.
+
+Tests for the validate function that resolve to true (found [here](https://github.com/MikhaD/object-validator/blob/main/tests/test_validate.py)) can be used as examples of valid schemas.
+### Dictionaries (objects)
+- All string keys in the schema must be present in the object. If you want an object to be able to have keys that are not in the schema use the `str` key and specify the type for those keys. For example, the schema `{"a": int, str: str}` matches a dictionary with a key "a" that is an integer and any number of other keys that are strings.
+### Lists
+- The schema must be a list of types in the standard schema syntax. The items in the object's list must match one of the types in the schema list. For example, the schema `[int, str]` matches a list that contains 0 or more integers and 0 or more strings. The schema `[{"a": int, "b": str}, {"c": bool}]` matches a list that contains 0 or more dictionaries with keys "a" and "b" that are integers and strings respectively, and 0 or more dictionaries with a key "c" that is a boolean.
