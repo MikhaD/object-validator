@@ -1,5 +1,5 @@
 # Validate JSON
-![min version](https://img.shields.io/static/v1?label=python&message=v9.0%2B&color=3776ab&logo=python)
+![min version](https://img.shields.io/static/v1?label=python&message=v10.0%2B&color=3776ab&logo=python)
 
 A simple tool to validate python dictionaries and/or lists against a schema. I was working on a different project that couldn't use 3rd party libraries and needed to work with JSON files provided by the user, so I wrote this tool to check that a given object matches a given schema.
 

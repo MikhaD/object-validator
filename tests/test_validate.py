@@ -45,6 +45,12 @@ False
 False
 >>> validate.validate({"b": 3, "c": 3, "d": "3"}, {"b": int, str: Union[int, str]})
 True
+>>> validate.validate({"b": 3, "c": 3, "d": "3"}, {"b": int, str: int})
+False
+>>> validate.validate({"b": 3, "c": 3, "d": "3"}, {"b": int, str: int | str})
+True
 >>> validate.validate({"b": "3"}, {"b": Union[int, str]})
+True
+>>> validate.validate({"b": "3"}, {"b": int | str})
 True
 """
